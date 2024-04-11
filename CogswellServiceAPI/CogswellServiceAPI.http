@@ -1,0 +1,6 @@
+@CogswellServiceAPI_HostAddress = http://localhost:5160
+
+GET {{CogswellServiceAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
