@@ -23,7 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/GetIngredients", () => "No Ingredient!");
+app.MapGet("/GetIngredients", () => "IngredientData.I");
 
 app.Run();
 
