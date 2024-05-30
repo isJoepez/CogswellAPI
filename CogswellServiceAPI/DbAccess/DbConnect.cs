@@ -1,20 +1,33 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using System.Data;
+using System.Data.SqlClient;
 using Dapper;
 
-namespace CogswellServiceAPI.DbAccess
+namespace CogswellServiceAPI.DbAccess;
+
+public class DbConnect : IDbConnect
 {
-    public class DbConnect
+
+    private readonly IConfiguration _config;
+    public DbConnect(IConfiguration config)
     {
-        public static string ConnectionString = "Data Source=Joepez\\SQLEXPRESS;Initial Catalog=inventory;Integrated Security=True;Trust Server Certificate=True";
+        _config = config;
+    }
 
-        public static SqlConnection Connection = new SqlConnection(ConnectionString);
+    public async Task<IEnumerable<T>> LoadData<T, U>(
+        string storedProcedure,
+        U parameters,
+        string connectionId = "default")
+    {
+        using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionId));
+        return await connection.QueryAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+    }
 
-
-
-
-
-
-
-
+    public async Task SaveData<T>(
+        string storedProcedure,
+        T parameters,
+        string connectionId = "default")
+    {
+        using IDbConnection connection = new SqlConnection(_config.GetConnectionString(connectionId));
+        await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
     }
 }
