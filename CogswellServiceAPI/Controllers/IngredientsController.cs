@@ -1,21 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace CogswellServiceAPI.Controllers;
 
-[ApiController]
 [Route("[controller]")]
+[ApiController]
 
 public class IngredientsController : ControllerBase
 {
 
-    [HttpGet(Name = "Ingredients")]
+    [HttpGet(Name = "GetIngredients")]
 
 
-    private static async Task<IResult> GetIngredients(IIngredientData data)
+    public async Task<IResult> GetIngredients(IIngredientData data)
     {
         try
         {
+
             return Results.Ok(await data.GetAllIngredients());
         }
         catch (Exception ex)
@@ -24,8 +24,9 @@ public class IngredientsController : ControllerBase
         }
     }
 
-    [HttpGet(Name = "Ingredients/{id}")]
-    private static async Task<IResult> GetIngredient(int id, IIngredientData data)
+    [HttpGet("{id:int}")]
+
+    public async Task<IResult> GetIngredient(int id, IIngredientData data)
     {
         try
         {
@@ -40,9 +41,8 @@ public class IngredientsController : ControllerBase
         }
     }
 
-    [HttpPost(Name = "Ingredients")]
-
-    private static async Task<IResult> InsertIngredient(Ingredient ingredient, IIngredientData data)
+    [HttpPost(Name = "AddIngredient")]
+    public async Task<IResult> InsertIngredient(Ingredient ingredient, IIngredientData data)
     {
         try
         {
@@ -56,9 +56,8 @@ public class IngredientsController : ControllerBase
         }
     }
 
-    [HttpPut(Name = "Ingredients")]
-
-    private static async Task<IResult> UpdateIngredient(Ingredient ingredient, IIngredientData data)
+    [HttpPut(Name = "UpdateIngredient")]
+    public async Task<IResult> UpdateIngredient(Ingredient ingredient, IIngredientData data)
     {
         try
         {
@@ -72,8 +71,8 @@ public class IngredientsController : ControllerBase
         }
     }
 
-    [HttpDelete(Name = "Ingredients/{id}")]
-    private static async Task<IResult> DeleteIngredient(int id, IIngredientData data)
+    [HttpDelete(Name = "DeleteIngredient/{id}")]
+    public async Task<IResult> DeleteIngredient(int id, IIngredientData data)
     {
         try
         {
@@ -86,5 +85,4 @@ public class IngredientsController : ControllerBase
             return Results.Problem(ex.Message);
         }
     }
-
 }
