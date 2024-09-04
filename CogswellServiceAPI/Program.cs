@@ -14,10 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<IDbConnect, DbConnect>();
 builder.Services.AddSingleton<IIngredientData, IngredientData>();
+builder.Services.AddSingleton<IMenu_ItemData, Menu_ItemData>();
+builder.Services.AddSingleton<IRecipeData, RecipeData>();
+
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyTestService", Version = "v1", });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyTestService", Version = "v1", }); 
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
